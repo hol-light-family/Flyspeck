@@ -14,9 +14,7 @@ Install [opam](https://ocaml.org/docs/installing-ocaml#1-install-opam).
 
    The proof was tested against commit
    `cba9198db76e9dfb89cbd653df9412d01f65b22a`, with camlp5 8.04.00 and
-   zarith 1.14.  `azure/config.ml` records the same commit, since the
-   nonlinear inequalities have to be imported into the HOL Light that
-   verified them.
+   zarith 1.14.
 
 2) Initialize HOL Light
 

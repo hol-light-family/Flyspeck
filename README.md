@@ -10,16 +10,18 @@ The project was completed August 10, 2014.
 
 The purpose of the flyspeck project was to produce a formal proof of the Kepler Conjecture. The name `flyspeck` comes from matching the pattern `/f.*p.*k/` against an English dictionary. FPK in turn is an acronym for "The Formal Proof of Kepler."  
 
-## Installation
+## Installing HOL Light and Loading Flyspeck
 
-See a step by step [installation guide](INSTALL.md), which also says how to run
+See a step by step [installation guide](INSTALL.md), which also explains how to run
 [`load_flyspeck.ml`](load_flyspeck.ml), the entry point for loading the proof.
+
+The comments in `load_flyspeck.ml` explain the main theorems.
 
 ## Resources
 
-There is an [installation guide](https://github.com/flyspeck/flyspeck/wiki/Installation%20Guide) for the project and other [Wiki pages](https://github.com/flyspeck/flyspeck/wiki/).
-
 The formalization project is based on the book [Dense Sphere Packings](downloads/DenseSpherePackings.pdf), which is available from Cambridge University Press.
+
+The old [flyspeck Github repository](https://github.com/flyspeck/flyspeck) contains the [Wiki pages](https://github.com/flyspeck/flyspeck/wiki/).
 
 ## License
 
@@ -36,8 +38,8 @@ See especially [`load_flyspeck.ml`](load_flyspeck.ml) which loads the project.
 The directory structure for the flyspeck project is as follows.
 
 [`azure`](azure)
- Files related to the formal verification of nonlinear inequalities.
- These inequalities were first formally verified by a computation on the Microsoft Azure Cloud.
+  Files related to the formal verification of nonlinear inequalities.
+  These inequalities were first formally verified by a computation on the Microsoft Azure Cloud.
 
 [`formal_graph`](formal_graph)
   Files related to the formal verification of the classification of tame graphs in

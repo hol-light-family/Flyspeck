@@ -123,8 +123,3 @@ HOL Light commit a84e0f3 replaced `define_finite_type` with `tybit0`/`tybit1`,
 changing the history of everything that mentions `real^N`. Regenerating
 `theorem_nonlinear_digest.hl` from a fresh `hashes.txt` is the point of running
 this directory.
-
-## Files that nothing builds
-
-- `main_verifier.hl` and `config.ml`, which `native_verifier.hl` supersedes.
-- `test_flyspeck.hl`, a performance test.

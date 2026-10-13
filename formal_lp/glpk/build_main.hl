@@ -1,10 +1,7 @@
 #load "unix.cma";;
 
-(* 
-Unix.putenv "FLYSPECK_DIR" "/mnt/Repository/text_formalization";; 
-*)
-
-(* The FLYSPECK_DIR environment variable must be set *)
+(* The FLYSPECK_DIR environment variable must be set, and must point to
+  the "text_formalization" directory *)
 let flyspeck_dir = 
   try Sys.getenv "FLYSPECK_DIR" with Not_found -> failwith "FLYSPECK_DIR must be set";;
 

@@ -1,30 +1,24 @@
 Formal verification of Flyspeck linear programs.
 
-It is assumed that a global variable "flyspeck_dir" contains
-a path to the "text_formalization" directory of the Flyspeck
-project.
-
 -----------------------------------------------------
 0. What is in each directory
 -----------------------------------------------------
 
 The work is in two halves.  glpk/ and LP-HL/ solve the linear programs and
-write a certificate for each one; nothing there is part of the proof.
-hypermap/, ineqs/ and more_arith/ are the formal half, which reads those
+write a certificate for each one.
+hypermap/, ineqs/ and more_arith/ are the other half, which reads those
 certificates and proves the corresponding theorem in HOL Light.
 
 glpk/
   The GLPK side.  head.mod, body.mod and tail.mod are the model, from which
-  make_models assembles graph_all.mod and model2.mod; those two are generated
-  and not kept in the repository.  glpk_link.ml runs glpsol and reads back what
-  it says, lpproc.ml and hard_lp.ml drive the branch and bound over a
-  hypermap, and sphere.ml holds the constants they need.  build_certificates.hl
-  turns one branch into a certificate and build_main.hl is the entry point,
-  Lp_build_main.build_all.  The three .sed scripts rewrite a model into the
-  slack form used when a branch is infeasible.  lp_binary_certificate.hl reads
-  what LP-HL.exe writes.  binary/ holds the certificates themselves, tmp/ is
-  the working directory of a run and keeps 000.txt, which LP-HL.exe requires,
-  and ex1/ and ex2/ are small examples.
+  make_models assembles graph_all.mod and model2.mod. glpk_link.ml runs glpsol
+  and reads back what it says, lpproc.ml and hard_lp.ml drive the branch and
+  bound over a hypermap, and sphere.ml holds the constants they need.
+  build_certificates.hl turns one branch into a certificate and build_main.hl
+  is the entry point, Lp_build_main.build_all. The three .sed scripts rewrite
+  a model into the slack form used when a branch is infeasible.
+  lp_binary_certificate.hl reads what LP-HL.exe writes.
+  binary/ holds the certificates themselves.
 
 LP-HL/
   A C# program, LP-HL.exe, which reads a model and the solution glpsol wrote
@@ -61,7 +55,8 @@ I. Construction of linear program certificates
 
 This step can be skipped. All linear program certificates
 are in the repository at 
-flyspeck_dir/../formal_lp/glpk/binary
+
+  formal_lp/glpk/binary
 
 All certificate files are binary files which contain serialized
 OCaml data structures, and they hold zarith integers, which are
@@ -79,7 +74,8 @@ of the Flyspeck project.
 2) Start HOL Light with its hol.sh.
 
 3) Load the file build_main.hl:
-needs (Filename.concat (Sys.getenv "FLYSPECK_DIR")
+
+  needs (Filename.concat (Sys.getenv "FLYSPECK_DIR")
          "../formal_lp/glpk/build_main.hl");;
 
 4) Build all linear program certificates with the command
@@ -88,7 +84,9 @@ Lp_build_main.build_all 1000;;
 Here, 1000 is a parameter which specifies how many terminal cases will be
 saved in each certificate file for easy linear program certificates.
 All certificates will be saved in 
-flyspeck_dir/../formal_lp/glpk/binary
+
+  formal_lp/glpk/binary
+
 Certificates of easy linear programs will be saved in files with the prefix "easy".
 Certificates of hard linear programs will be saved in files with the prefix "hard".
 
@@ -99,8 +97,9 @@ otherwise read the certificate in both forms.
 
 It is also possible to build either easy linear program certificates or hard linear
 program certificates. The corresponding commands are
-Lp_build_main.build_all_easy 1000;;
-Lp_build_main.build_all_hard 1;;
+
+  Lp_build_main.build_all_easy 1000;;
+  Lp_build_main.build_all_hard 1;;
 
 The run is serial and the hard cases take hours. glpk/README.md says what a
 process needs of its own to run several of them at once, and comes with a
@@ -110,7 +109,7 @@ script that merges the output directories afterwards.
 II. Formal verification of Flyspeck linear programs
 -----------------------------------------------------
 
-0) Make sure that the directory flyspeck_dir/../formal_lp/glpk/binary
+0) Make sure that the directory formal_lp/glpk/binary
 contains all certificate files.
 
 1) Start OCaml and load the Flyspeck project; ../load_flyspeck.ml is the entry
@@ -125,8 +124,10 @@ the project build, and assembles the result into the theorem
 `linear_programming_results`.
 
 Commands
-let result_easy = Verify_all.verify_easy [] None;;
-let result_hard = Verify_all.verify_hard [] None;;
+
+  let result_easy = Verify_all.verify_easy [] None;;
+  let result_hard = Verify_all.verify_hard [] None;;
+
 will verify easy and hard linear programs separately.
 
 result has the type ((string * thm) list * float) list. Each element of the list
@@ -142,7 +143,9 @@ verification of linear programs.
 `lp_main_estimate` is a constant which defines the main estimate conclusions.
 
 The command
-Verify_all.test_result result;;
+
+  Verify_all.test_result result;;
+
 will return the total verification time, 
 a union of all conclusions (must be `contravening V ==> F`),
 and a union of all assumptions without isomorphism assumptions 

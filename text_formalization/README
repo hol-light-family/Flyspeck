@@ -10,7 +10,7 @@ The Multivariate/flyspeck.ml file is needed before any of the files in these dir
 X- build/ files related to building the project as a whole
 
 X- general/  general definitions and tactics.
-   This file contains crucial files giving the statement of the kepler conjecture.
+   This directory contains crucial files giving the statement of the kepler conjecture.
    See general/audit_formal_proof.hl for a summary of files references in the 
    publication "A Formal Proof of the Kepler Conjecture"
    See general/the_kepler_conjecture.hl for the proved kepler conjecture.
@@ -31,9 +31,11 @@ Then the individual chapters follow.
 6- local/
 7- tame/ 
 
-The files build/build.hl and build/strictbuild.hl go through the build sequence.
-(The file build/strictbuild.hl goes through the build much more cautiously with greater
- error reporting.  The file build.hl does the ordinary everyday build.)
+The file ../load_flyspeck.ml is the entry point.  It loads build/strictbuild.hl,
+which goes through the build sequence with error reporting, and defines build_to
+and build_to_full, which stop at a given file.  The file build/build.hl holds the
+build sequences themselves and is loaded by strictbuild.hl.
+See ../INSTALL.md for how to start a build.
 
 X- logs/ some historical logs of changes and project issues.
 
