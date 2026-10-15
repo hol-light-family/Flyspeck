@@ -1,47 +1,14 @@
-hashes:
-#	grep -r "Hash" output | sort -V | \
-#		sed -e 's/.*Hash  //' -e 's/^.*,(/(/' > hashes0.txt
-	find output -type f ! -regex ".*/\..*" -exec grep "Hash" '{}' \; | sort -V | \
-		sed -e 's/.*Hash  //' -e 's/^.*,(/(/' > hashes0.txt
-	sed -e '/prep-5744538693/{d}' \
-	    -e '/prep-6944699408 a reduced/{d}' \
-	    -e '/prep-7043724150 a reduced v2/{d}' hashes0.txt > hashes.txt
-	find out-extra -type f ! -regex ".*/\..*" -exec grep "Hash" '{}' \; | sort -V | \
-		sed -e 's/.*Hash  //' -e 's/^.*,(/(/' >> hashes.txt
-	rm hashes0.txt
-
-hashes-urban:
-	find urban/out -type f ! -regex ".*/\..*" -exec grep "Hash" '{}' \; | sort -V | \
-		sed -e 's/.*Hash  //' -e 's/^.*,(/(/' > hashes2.txt
-	grep "Hash" output/fail/sharp_out.txt | \
-		sed -e 's/.*Hash  //' -e 's/^.*,(/(/' >> hashes2.txt
-
-fails:
-	grep -r "FAIL" output | sort -V > fails.txt
-	grep -r "ERR" output | sort -V >> fails.txt
-	sed -e '/TAC_PROOF/{d}' -e '/SDCCMGA/{d}' fails.txt > fails0.txt
-	rm fails.txt
-	mv fails0.txt fails.txt
-
-time:
-	find output -type f ! -regex ".*/\..*" -exec grep "Time" '{}' \; | \
-		sed -e 's/.*Time.*://' -e 's/ //g' | \
-		awk '{s += $$0} END {print s / 3600}'
-
-time-urban:
-	find urban/out -type f ! -regex ".*/\..*" -exec grep "Time" '{}' \; | \
-		sed -e 's/.*Time.*://' -e 's/ //g' | \
-		awk '{s += $$0} END {print s / 3600}'
-
-max-time:
-	find output -type f ! -regex ".*/\..*" -exec grep "Time" '{}' \; | \
-		sed -e 's/.*Time.*://' -e 's/ //g' | \
-		awk '{if ($$0 > s) {s = $$0}} END {print s}'
-
-max-time-urban:
-	find urban/out -type f ! -regex ".*/\..*" -exec grep "Time" '{}' \; | \
-		sed -e 's/.*Time.*://' -e 's/ //g' | \
-		awk '{if ($$0 > s) {s = $$0}} END {print s}'
+# Provenance of ../ineqs.txt.
+#
+# ineqs/ineqs_all.txt holds all 23242 cases of the nonlinear inequalities, the
+# five sharp ones included.  native_verifier settles the other 23237 by interval
+# arithmetic and reads them from ../ineqs.txt, which "filter-sharp" derives by
+# dropping the five:
+#
+#   make filter-sharp
+#
+# ../ineqs.txt is checked in, so this is here to say where it comes from rather
+# than because anything builds it.
 
 filter-sharp:
 	sed -e '/13158,(prep-TSKAJXY-RIBCYXU sharp,0)/{d}' \
@@ -50,3 +17,5 @@ filter-sharp:
 	    -e '/11959,(prep-GRKIBMP B V2,0)/{d}' \
 	    -e '/13075,(prep-QZECFIC wt0 corner,0)/{d}' \
 	    ineqs/ineqs_all.txt > ../ineqs.txt
+
+.PHONY: filter-sharp

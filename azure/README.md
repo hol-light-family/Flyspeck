@@ -44,10 +44,9 @@ environment variables:
 | `FLYSPECK_FIRST` | first case, counting from 0      | `0`          |
 | `FLYSPECK_LAST`  | last case                        | `0`          |
 
-For example:
+For example, cases 0 to 13 of `ineqs.txt`:
 
-    FLYSPECK_INEQS=results/ineqs/ineqs2_trig.txt FLYSPECK_FIRST=0 \
-      FLYSPECK_LAST=13 ./native_verifier > out.txt
+    FLYSPECK_FIRST=0 FLYSPECK_LAST=13 ./native_verifier > out.txt
 
 Case 0 of `ineqs.txt` takes 150 s on a Neoverse-V2 core, and a process spends
 about 340 s building the base 200 arithmetic tables before it starts on any
@@ -82,7 +81,7 @@ Each line of the result pairs a case with the md5 digest of its theorem.
 
 Five of the nonlinear inequalities are sharp: they hold with equality somewhere
 on their domain, so the interval arithmetic that settles the other 23237 cannot
-settle them.  They are not in `ineqs.txt`, which is why `results/hashes.txt`
+settle them.  They are not in `ineqs.txt`, which is why a complete `hashes.txt`
 holds 23242 entries against that file's 23237 cases:
 
     (prep-GRKIBMP B V2,0)
@@ -116,10 +115,20 @@ Append its digests to the `hashes.txt` collected above, bringing that file to
       | grep -F '"' | sed -e 's/^.*:", *"//' -e 's/".*$//' | sort > hash2.txt
     md5sum hash1.txt hash2.txt
 
-`results/hashes.txt`, from the 2014 run, agrees with
-`theorem_nonlinear_digest.hl` this way. A fresh run does not reproduce either of
-them, because a digest covers the entire definitional history of its theorem and
-HOL Light commit a84e0f3 replaced `define_finite_type` with `tybit0`/`tybit1`,
-changing the history of everything that mentions `real^N`. Regenerating
-`theorem_nonlinear_digest.hl` from a fresh `hashes.txt` is the point of running
-this directory.
+The `hashes.txt` kept here is the collection of the run
+`theorem_nonlinear_digest.hl` holds the digests of, and the two agree this way:
+both reduce to md5 `80d74590784bd6d4272b965a726c87d9`.
+
+A run against a different HOL Light need not reproduce those values, because a
+digest covers the entire definitional history of its theorem. HOL Light commit
+a84e0f3, for one, replaces `define_finite_type` with `tybit0`/`tybit1`, which
+changes the history of everything that mentions `real^N`, and so every digest
+here. Regenerating `theorem_nonlinear_digest.hl` from a fresh `hashes.txt` is
+the point of running this directory.
+
+## Where `ineqs.txt` comes from
+
+`results/ineqs/ineqs_all.txt` holds all 23242 cases, the five sharp ones
+included, and `results/Makefile` derives `ineqs.txt` from it by dropping those
+five. Both files are checked in, so nothing in the build reads
+`results/`; it records where the case data comes from.
