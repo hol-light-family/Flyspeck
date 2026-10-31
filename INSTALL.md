@@ -1,6 +1,8 @@
 # Step by Step Installation Guide
 
-This guide was tested with OCaml 5.04 on Ubuntu 24.04.
+This guide was tested with OCaml 5.40 on Ubuntu 24.04.
+The list of HOL Light versions that work for building Flyspeck is available at
+[the HOL Light benchmark dashboard](https://hol-light.github.io/benchmark-results/index.html).
 
 Install [opam](https://ocaml.org/docs/installing-ocaml#1-install-opam).
 
