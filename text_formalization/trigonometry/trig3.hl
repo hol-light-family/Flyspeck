@@ -250,7 +250,7 @@ let GVWTZKY = UNKNOWN;; (* arc, atn2 *)
 
 (* cross product something *)
 let FCUAGA = cross;;
-let KVVWPNA = NORM_CROSS ;; (* norm cross and ups, combine with UKBAHKV *)
+let KVVWPNA = NORM_CROSS_SIN ;; (* norm cross and ups, combine with UKBAHKV *)
 
 (* Lemma label{} *)
 (* cross product order and distribution with dot product *)
