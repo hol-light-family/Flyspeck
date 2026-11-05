@@ -1,0 +1,41 @@
+(* ========================================================================= *)
+(* graph/tg_bridge_defs.hl -- the representation maps between our graph      *)
+(* datatype (tg_graph.hl) and Hales' tuple representation                    *)
+(* (tg_hales_alias.hl): a face (FACE vs t) becomes the pair (vs, t = Final), *)
+(* a graph (GRAPH fs n fss h) becomes the tuple (fs, n, fss, h) with the     *)
+(* faces mapped.  HFACE/HGRAPH go to Hales' side, OFACE/OGRAPH come back;    *)
+(* they are mutually inverse bijections (tg_bridge_graph.hl).                *)
+(* ========================================================================= *)
+
+flyspeck_needs "graph/tg_wf.hl";;
+flyspeck_needs "graph/tg_hales_alias.hl";;
+
+prioritize_num();;
+
+module Tg_bridge_defs = struct
+
+open Tg_list;;
+open Tg_graph;;
+open Tg_enum;;
+open Tg_tame;;
+open Tg_iso;;
+open Tg_exec;;
+open Tg_check;;
+open Tg_hales_alias;;
+open Tg_wf;;
+let HFACE = new_definition
+ `HFACE f = (VERTICES f, FINAL_FACE f)`;;
+
+let OFACE = new_definition
+ `OFACE (p:num list # bool) =
+    FACE (FST p) (if SND p then Final else Nonfinal)`;;
+
+let HGRAPH = new_definition
+ `HGRAPH g = (MAP HFACE (FACES g), COUNT_VERTICES g,
+              MAP (MAP HFACE) (FACE_LIST_AT g), HEIGHTS g)`;;
+
+let OGRAPH = new_definition
+ `OGRAPH (hg:((num)list#bool)list#num#(((num)list#bool)list)list#(num)list) =
+    GRAPH (MAP OFACE (faces hg)) (countVertices hg)
+          (MAP (MAP OFACE) (faceListAt hg)) (heights hg)`;;
+end;;
