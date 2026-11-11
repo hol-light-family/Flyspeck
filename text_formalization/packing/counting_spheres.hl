@@ -5459,8 +5459,7 @@ let polyhedron_sum_sum_edge = prove_by_refinement(
   DISCH_THEN (fun t -> MP_TAC (ISPEC (`(\ f e. &1):(real^3->bool)->(real^3->bool)->real`) t));
   ANTS_TAC;
     REWRITE_TAC[IN_ELIM_THM];
-    ASM_SIMP_TAC[FINITE_EDGE];
-    BY(ASM_MESON_TAC[FINITE_EDGE]);
+    BY(ASM_SIMP_TAC[FINITE_EDGE]);
   MATCH_MP_TAC (MESON[] (`(x = x') /\ (y = y') ==> ((x = y) ==> (x' = y'))`));
   CONJ_TAC;
     MATCH_MP_TAC SUM_EQ;

@@ -3174,7 +3174,7 @@ ABBREV_TAC ` nn = CARD (V:A -> bool) `;
 EXPAND_TAC "V";
 REWRITE_TAC[ARITH_RULE ` a < b ==> a <= b - 1 `; LEMMA_SUBSET_ORBIT_MAP_LT];
 DOWN_TAC;
-SIMP_TAC[EQ_SYM_EQ];
+REWRITE_TAC[EQ_SYM_EQ];
 NHANH SELF_CYCLIC_IMP_FINITE;
 ONCE_REWRITE_TAC[EQ_SYM_EQ];
 STRIP_TAC;
@@ -3319,11 +3319,6 @@ ONCE_REWRITE_TAC[CONJ_SYM];
 STRIP_TAC;
 DOWN THEN DOWN THEN PHA;
 ASM_SIMP_TAC[];
-UNDISCH_TAC `!x n.
-          x = ITER n (rho_node1 FF) v /\ n < CARD V
-          ==> azim_cycle V (vec 0) e (ITER n (rho_node1 FF) v) =
-              rho_node1 FF (ITER n (rho_node1 FF) v) `;
-MESON_TAC[];
 SUBGOAL_THEN` &0 < sin (azim (vec 0) e v' (rho_node1 FF v')) ` ASSUME_TAC;
 MP_TAC (SPECL [`e:real^3 `;` v':real^3 `;` rho_node1 FF v' `]
  Trigonometry2.JBDNJJB);

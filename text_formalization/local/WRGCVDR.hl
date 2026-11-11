@@ -983,7 +983,6 @@ MESON_TAC[];
 ASSUME_TAC2 (TR_SET_RULE[]` (x:A) IN W /\ ~(W = {x}) ==> ~(W DELETE x = {}) `);
 ANTS_TAC;
 ASM_SIMP_TAC[FINITE_DELETE];
-FIRST_X_ASSUM ACCEPT_TAC;
 STRIP_TAC;
 USE_FIRST `! x y. (ll: A -> A -> bool) x y \/ ll y x ` (DISJ_CASES_TAC o (SPECL[` x:A `;` v:A`]));
 EXISTS_TAC `x:A`;
