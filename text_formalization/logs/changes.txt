@@ -161,3 +161,18 @@ Fri Oct  9 2026
    on the deserialization axiom beside the three of HOL Light.  The one
    certificate above a hundred megabytes is kept as hard_2.tar.gz, as hard_7
    once was.
+
+Tue Nov 10 2026
+   The project builds against HOL Light e5236a5839b4d08dc2536b325cea0af855e6c379
+   on OCaml 5.3.  HOL Light commit 2828953 made the simplifier instantiate
+   variables that occur only in the condition of a conditional rewrite from
+   facts in the context, so some simplification steps now prove more than
+   they did, and fourteen proofs in nine files were adapted.  Mostly a step
+   that finished off what the simplifier used to leave has gone; in
+   local/local_lemmas.hl one SIMP_TAC is now a REWRITE_TAC, and in
+   tame/tame_opposite.hl EQ_SYM is dropped from a simplification that would
+   otherwise loop.  HOL Light from before 2828953 no longer works.  Against
+   2828953, loading Build.build_sequence_full still gives
+   |- import_tame_classification ==> the_kepler_conjecture; against e5236a5,
+   which only adds coinductive definitions to the core, the main statement and
+   the nonlinear inequalities were checked again.

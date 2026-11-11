@@ -1865,8 +1865,6 @@ let next_eln_indexf = prove_by_refinement(
     BY(ASM_TAC THEN ARITH_TAC);
   MATCH_MP_TAC next_el_indexf;
   ASM_SIMP_TAC[arith `SUC n < s ==> 1 < s`];
-  CONJ2_TAC;
-    BY(ASM_TAC THEN ARITH_TAC);
   FULL_EXPAND_TAC "y";
   FULL_EXPAND_TAC "yn";
   BY(REWRITE_TAC[Hypermap.COM_POWER;o_THM])
@@ -10174,8 +10172,6 @@ let HQYMRTX1_list = prove_by_refinement(
   REPEAT WEAKER_STRIP_TAC;
   INTRO_TAC Hypermap.lemmaHQYMRTX [`hypermap_of_list L`;`loop_family_of_list N`;`loop_of_list r`;`x`];
   ASM_SIMP_TAC[marked_translate];
-  ANTS_TAC;
-    BY(ASM_MESON_TAC[marked_translate]);
   REPEAT WEAKER_STRIP_TAC;
   CONJ2_TAC;
     TYPIFY `MEM x (list_of_darts L)` (C SUBGOAL_THEN ASSUME_TAC);
@@ -10319,8 +10315,6 @@ let QRDYXYJ_list = prove_by_refinement(
   REPEAT WEAKER_STRIP_TAC;
   INTRO_TAC lemmaParameters [`hypermap_of_list L`;`loop_family_of_list N`;`loop_of_list r`;`x`];
   ASM_SIMP_TAC[marked_translate;marked_conclusion];
-  ANTS_TAC;
-    BY(ASM_MESON_TAC[marked_translate]);
   ASM_SIMP_TAC[];
   GMATCH_SIMP_TAC card_atoms_of_loop;
   CONJ_TAC;
@@ -10858,7 +10852,6 @@ let is_normal_loop_list = prove_by_refinement(
   REWRITE_TAC[GSYM Seq.allP] THEN REPEAT WEAKER_STRIP_TAC;
   FIRST_X_ASSUM_ST `dart` MP_TAC;
   ASM_SIMP_TAC[dart_hypermap_of_list;IN_SET_OF_LIST];
-  DISCH_TAC;
   TYPIFY `x` (RENAME_TAC "r");
   TYPIFY `x''` (RENAME_TAC "d");
   SUBCONJ_TAC;

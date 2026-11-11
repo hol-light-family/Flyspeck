@@ -1,6 +1,9 @@
 # Step by Step Installation Guide
 
 This guide was tested with OCaml 5.40 on Ubuntu 24.04.
+The recommended version of HOL Light is commit
+`e5236a5839b4d08dc2536b325cea0af855e6c379`, which the proof was tested
+against; step 1 below checks it out.
 The list of HOL Light versions that work for building Flyspeck is available at
 [the HOL Light benchmark dashboard](https://hol-light.github.io/benchmark-results/index.html).
 
@@ -8,15 +11,17 @@ Install [opam](https://ocaml.org/docs/installing-ocaml#1-install-opam).
 
 ## HOL Light
 
-1) Clone the HOL Light repository
+1) Clone the HOL Light repository and check out the recommended commit
 
     ```
     git clone https://github.com/jrh13/hol-light.git
+    git -C hol-light checkout e5236a5839b4d08dc2536b325cea0af855e6c379
     ```
 
-   The proof was tested against commit
-   `cba9198db76e9dfb89cbd653df9412d01f65b22a`, with camlp5 8.04.00 and
-   zarith 1.14.
+   The proof was tested against this commit, with OCaml 5.3.0, camlp5 8.03.01
+   and zarith 1.14.  It needs a HOL Light at least as recent as commit
+   `2828953e4c104c885ed5388ba2ca8ff95e8fbf4f`, which changed the simplifier in
+   a way that the proofs were adapted to, so older versions no longer work.
 
 2) Initialize HOL Light
 

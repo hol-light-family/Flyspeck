@@ -15,6 +15,10 @@ The purpose of the flyspeck project was to produce a formal proof of the Kepler 
 See a step by step [installation guide](INSTALL.md), which also explains how to run
 [`load_flyspeck.ml`](load_flyspeck.ml), the entry point for loading the proof.
 
+The proof is tested against HOL Light commit
+`e5236a5839b4d08dc2536b325cea0af855e6c379`, which is the recommended version;
+the guide shows how to check it out.
+
 The comments in `load_flyspeck.ml` explain the main theorems.
 
 ## Resources

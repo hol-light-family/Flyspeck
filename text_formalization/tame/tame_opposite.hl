@@ -322,7 +322,7 @@ let opposite_no_double_joints = prove(`!H:(A)hypermap.
      SUBGOAL_THEN `z:A = u:A ==> x:A = y` MATCH_MP_TAC THENL
      [
        EXPAND_TAC "z" THEN EXPAND_TAC "u" THEN
-         SIMP_TAC[node_map_injective; EQ_SYM];
+         SIMP_TAC[node_map_injective];
        ALL_TAC
      ] THEN
      MATCH_MP_TAC EQ_SYM THEN

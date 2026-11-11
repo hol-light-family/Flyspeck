@@ -4800,9 +4800,7 @@ let next_el_core_last = prove_by_refinement(
   MATCH_MP_TAC Tame_list.f_list_fst_snd;
   ASM_REWRITE_TAC[];
   INTRO_TAC Tame_list.normal_list_list_of_darts [`L`;`N`];
-  ASM_SIMP_TAC[GSYM Seq.allP;Seq2.mem_flatten];
-  DISCH_THEN MATCH_MP_TAC;
-  BY(ASM_MESON_TAC[])
+  BY(ASM_SIMP_TAC[GSYM Seq.allP;Seq2.mem_flatten])
   ]);;
   (* }}} *)
 
@@ -4877,9 +4875,7 @@ let next_el_core_imp_next_f = prove_by_refinement(
     BY(ASM_MESON_TAC[Aq8.MEM_PARTS_IMP;MEM_LAST]);
   TYPIFY `MEM y (list_of_darts L)` (C SUBGOAL_THEN ASSUME_TAC);
     INTRO_TAC Tame_list.normal_list_list_of_darts [`L`;`N'`];
-    ASM_SIMP_TAC[GSYM Seq.allP;Seq2.mem_flatten];
-    DISCH_THEN MATCH_MP_TAC;
-    BY(ASM_MESON_TAC[]);
+    BY(ASM_SIMP_TAC[GSYM Seq.allP;Seq2.mem_flatten]);
   TYPIFY `LAST p' = y` (C SUBGOAL_THEN ASSUME_TAC);
     INTRO_TAC f_list_imp_last [`L`;`r'`;`y`];
     ASM_SIMP_TAC[];
