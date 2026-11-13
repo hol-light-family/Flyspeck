@@ -416,6 +416,90 @@ let build_sequence_nonserial =
   filter (fun t -> not (t =    "nonlinear/mk_all_ineq.hl"))
     build_sequence_full;;
 
+(* The graph/ chapter: the tame-graph classification proved in HOL Light
+   (replacing the appeal to the external Isabelle classification).  It is
+   loaded after general/the_kepler_conjecture.hl, whose `archive` and
+   `import_tame_classification` definitions it bridges to.  Not part of the
+   default build sequences; load with
+
+     map flyspeck_needs Build.build_sequence_graph;;
+
+   See text_formalization/graph/README.md.  tg_classification.hl needs the
+   four class theorems TFO ARCHIVE p (SEED p): imported by statement digest
+   (build_sequence_graph_serial) or proved in the session by the certificate
+   driver (build_sequence_graph_prove); until a source is installed,
+   graph_classification () reports that. *)
+
+(* The composition layer: the specification, the soundness theory and the
+   bridge -- the files needed to compose |- import_tame_classification from
+   the four class theorems (the dependency closure of tg_classification.hl,
+   in load order), and graph/tg_kepler.hl, which turns it into
+   |- the_nonlinear_inequalities ==> the_kepler_conjecture.  The executable
+   layer that proves the class theorems is added by
+   build_sequence_graph_prove below. *)
+
+let build_sequence_graph =
+  let (through_kepler, _) =
+    cut_at "nonlinear/mk_all_ineq.hl" [] build_sequence_full in
+  through_kepler @
+  [ "graph/tg_list.hl"; "graph/tg_graph.hl"; "graph/tg_enum.hl";
+    "graph/tg_tame.hl"; "graph/tg_iso.hl"; "graph/tg_exec.hl";
+    "graph/tg_check.hl"; "graph/tg_sound.hl"; "graph/tg_mono.hl";
+    "graph/tg_archive_data.hl"; "graph/tg_archive.hl"; "graph/tg_main.hl";
+    "graph/tg_wf.hl"; "graph/tg_hales_alias.hl"; "graph/tg_bridge_defs.hl";
+    "graph/tg_bridge_list.hl"; "graph/tg_wf_inv.hl";
+    "graph/tg_bridge_graph.hl"; "graph/tg_bridge_tame.hl";
+    "graph/tg_archive_bridge.hl";
+    "graph/tg_bridge_main.hl"; "graph/tg_eval_support.hl";
+    "graph/tg_bridge_archive.hl"; "graph/tg_classification.hl";
+    "graph/tg_kepler.hl" ];;
+
+(* The import: the composition layer plus the frozen class-theorem digests
+   and graph/tg_graph_import.hl, which conjures the four TFO ARCHIVE p
+   (SEED p) under the explicit axiom graph_deserialization after checking
+   their statement digests -- as nonlinear/mk_all_ineq.hl imports the
+   nonlinear inequalities.  graph_classification () then returns
+   |- import_tame_classification. *)
+
+let build_sequence_graph_serial =
+  build_sequence_graph @
+  [ "general/theorem_graph_digest.hl"; "graph/tg_graph_import.hl" ];;
+
+(* The Kepler conjecture itself: the import, then Flyspeck's serialized
+   nonlinear inequalities (nonlinear/mk_all_ineq.hl) and
+   graph/tg_kepler_complete.hl, whose Tg_kepler_complete.the_kepler_conjecture
+   () is |- the_kepler_conjecture.  As for
+   build_sequence_the_nonlinear_inequalities, set FLYSPECK_SERIALIZATION=1
+   in the environment before loading Flyspeck.  The theorem rests on the
+   deserialization axiom (nonlinear inequalities), graph_deserialization
+   (class theorems) and HOL Light's axioms. *)
+
+let build_sequence_graph_kepler =
+  build_sequence_graph_serial @
+  [ "nonlinear/mk_all_ineq.hl"; "graph/tg_kepler_complete.hl" ];;
+
+(* The whole chapter: the composition layer plus the executable layer (the
+   proof-producing evaluator, the certificate driver, the lower-bound and leaf
+   machinery).  With it a Flyspeck session can itself prove a class theorem,
+   serially, from a certificate written by ../graph_native; for example
+
+     Tg_driver.xlb_mode := true;;
+     let th = Tg_driver.run_class 0 "cert0.txt";;
+
+   proves |- TFO ARCHIVE 0 (SEED 0) (12 min for Tri; see graph/README.md for
+   the other classes). *)
+
+let build_sequence_graph_prove =
+  build_sequence_graph @
+  [ "graph/tg_lbthm.hl"; "graph/tg_isothm.hl"; "graph/tg_newverts.hl";
+    "graph/tg_inv.hl"; "graph/tg_xlb.hl"; "graph/tg_xcheck.hl";
+    "graph/tg_arcs.hl"; "graph/tg_split_inv.hl"; "graph/tg_enum_props.hl";
+    "graph/tg_subdiv_inv.hl"; "graph/tg_xlbthm.hl";
+    "graph/tg_xdriver_lemmas.hl"; "graph/tg_enum_fast.hl";
+    "graph/tg_enum_fast2.hl"; "graph/tg_xstats.hl"; "graph/tg_leaf.hl";
+    "graph/tg_leaf_exec.hl"; "graph/tg_eval_db.hl";
+    "graph/tg_eval_compiled.hl"; "graph/tg_driver.hl" ];;
+
 
 
 end;;
